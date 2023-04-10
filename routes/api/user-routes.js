@@ -116,6 +116,4 @@ router
       .catch((err) => res.json(err));
   });
 
-console.log(User.find({ _id: new ObjectID(`6433620ad6cda60d52133646`) }));
-
 module.exports = router;
