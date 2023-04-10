@@ -41,6 +41,34 @@ router.get("/:id", (req, res) => {
     });
 });
 
+router.post("/:id/reactions/", (req, res) => {
+  Thought.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $push: { reactions: req.body } }
+  )
+    .then((reaction) => {
+      res.send(reaction);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Error posting reaction");
+    });
+});
+
+router.delete("/:id/reactions/:reactionId", (req, res) => {
+  Thought.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $pull: { reactions: { _id: req.params.reactionId } } }
+  )
+    .then((reaction) => {
+      res.send(reaction);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Error deleting reaction");
+    });
+});
+
 router.delete("/:id", (req, res) => {
   Thought.findByIdAndDelete(req.params.id)
     .then((thought) => {
