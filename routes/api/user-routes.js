@@ -69,7 +69,7 @@ router
   .route("/:id/friends/:friendId")
   .post((req, res) => {
     User.findOneAndUpdate(
-      { _id: req.params.friendId },
+      { _id: req.params.id },
       { $addToSet: { friends: req.params.friendId } },
       { new: true, runValidators: true }
     )
@@ -81,7 +81,7 @@ router
         // add userId to friendId's friend list
         User.findOneAndUpdate(
           { _id: req.params.friendId },
-          { $addToSet: { friends: req.params.userId } },
+          { $addToSet: { friends: req.params.id } },
           { new: true, runValidators: true }
         )
           .then((dbUserData2) => {
