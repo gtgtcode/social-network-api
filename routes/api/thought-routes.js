@@ -16,9 +16,9 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   // example data
   // {
-  //   "thoughtText": "Here's a cool thought...",
-  //   "username": "lernantino",
-  //   "userId": "5edff358a0fcb779aa7b118b"
+  //   "thoughtText": "Hello World",
+  //   "username": "user1",
+  //   "userId": "64349a162bf89ae98e474a89"
   // }
   Thought.create(req.body)
     .then(() => {
@@ -41,7 +41,23 @@ router.get("/:id", (req, res) => {
     });
 });
 
+router.put("/:id", (req, res) => {
+  Thought.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then((thought) => {
+      res.send(thought);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Error updating thought");
+    });
+});
+
 router.post("/:id/reactions/", (req, res) => {
+  // example data
+  // {
+  //   "reactionText": "Nice Post!",
+  //   "username": "johndoe"
+  // }
   Thought.findByIdAndUpdate(
     { _id: req.params.id },
     { $push: { reactions: req.body } }

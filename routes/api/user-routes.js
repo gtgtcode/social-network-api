@@ -44,6 +44,16 @@ router
         res.status(500).send("Error retrieving user with id " + req.params.id);
       });
   })
+  .put((req, res) => {
+    User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      .then((user) => {
+        res.send(user);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send("Error updating user with id " + req.params.id);
+      });
+  })
   .delete((req, res) => {
     User.findByIdAndDelete(req.params.id)
       .then(() => {
